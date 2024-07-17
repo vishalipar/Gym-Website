@@ -58,12 +58,24 @@
               <li><a href="#">View Profile</a></li>
             </ul>
           </li>
-          <li><a href="/signin">SignIn</a></li>
+          
+          
+          {% if not request.user.is_authenticated %}
+          
+          <li><a href="/signup">SignIn</a></li>
+          
+          {% else %}
+          
+          <li><a href="/logout">Logout</a></li>
+          <a class="btn-getstarted" href="/">Welcome</a>
+          
+          
+          {% endif %}
+          
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <a class="btn-getstarted" href="/achievements">Gym Awards</a>
 
     </div>
   </header>
