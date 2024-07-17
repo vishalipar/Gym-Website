@@ -2,11 +2,38 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .models import Contact, Membershipplan, Trainer, Enrollment
+from .models import Contact, Membershipplan, Trainer, Enrollment, Gallery,Attendance
 # Create your views here.
 
 def home(request):
     return render(request, 'index.html')
+
+def gallery(request):
+    posts = Gallery.objects.all()
+    context = {'posts':posts}
+    
+    return render(request, 'gallery.html', context)
+
+def attendance(request):
+    if not request.user.is_authenticated:
+        messages.warning(request, "Please Login and Try Again")
+        return redirect('/login')
+    
+    SelectTrainer = Trainer.objects.all()
+    context = {'SelectTrainer':SelectTrainer}
+    
+    if request.method == 'POST':
+        PhoneNumber = request.POST.get('PhoneNumber')
+        Login = request.POST.get('Logintime')
+        Logout = request.POST.get('logout')
+        SelectWorkout = request.POST.get('workout')
+        TrainedBy = request.POST.get('trainer')
+        query = Attendance(PhoneNumber=PhoneNumber, Login=Login, Logout=Logout, SelectWorkout = SelectWorkout, TrainedBy = TrainedBy)
+        query.save()
+        messages.success(request, "Attendance applied success")
+        return redirect('/attendance')
+    
+    return render(request, 'attendance.html', context)
 
 def profile(request):
     if not request.user.is_authenticated:
@@ -15,7 +42,8 @@ def profile(request):
     
     user_phone = request.user
     posts = Enrollment.objects.filter(PhoneNumber=user_phone)
-    context = {'posts':posts}
+    attendance = Attendance.objects.filter(PhoneNumber=user_phone)
+    context = {'posts':posts, 'attendance':attendance}
     return render(request, 'profile.html', context)
 
 

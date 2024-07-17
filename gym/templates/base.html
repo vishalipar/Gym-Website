@@ -53,11 +53,26 @@
             <ul>
               <li><a href="/join">Enroll</a></li>
               
-              <li><a href="#">workouts</a></li>
+              <li><a href="/attendance">Attendance</a></li>
               <li><a href="/profile">View Profile</a></li>
             </ul>
           </li>
+          
+          
+          
+          {% if not request.user.is_authenticated %}
+          
           <li><a href="/signup">SignIn</a></li>
+          
+          {% else %}
+          
+          <li><a href="/logout">Logout</a></li>
+          <a class="btn-getstarted" href="/">Welcome</a>
+          
+          
+          {% endif %}
+          
+          
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -86,14 +101,17 @@
       </div>
       
       
-      {% block body %}
       
-      
-      {% endblock %}
       
       
     </section>
   </main>
+  
+  
+  {% block body %}
+      
+      
+      {% endblock %}
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
