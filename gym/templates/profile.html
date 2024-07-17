@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}
+Profile{% endblock %}
+
+{% block head %}
+<h2>Enrollment Details</h2>
+
+
+<div class="container mt-3">
+    
+    <div class="row">
+        
+        <div class="col-md-2"></div>
+        
+        <div class="col-md-7">
+           
+            {% for post in posts %}
+            <ul class="list-group">
+                
+                <li class="list-group-item bg-dark text-white"><h4>Name : {{post.FullName}} </h4></li>
+                <li class="list-group-item bg-dark text-white"><h4>Email : {{post.Email}} </h4></li>
+                <li class="list-group-item bg-dark text-white"><h4>Gender : {{post.Gender}} </h4></li>
+                <li class="list-group-item bg-dark text-white"><h4>PhoneNumber : {{post.PhoneNumber}} </h4></li>
+                <li class="list-group-item bg-dark text-white"><h4>DOB : {{post.DOB}} </h4></li>
+                <li class="list-group-item bg-dark text-white"><h4>Membership Plan : {{post.SelectMemberShipplan}} </h4></li>
+                <li class="list-group-item bg-dark text-white"><h4>Trainer : {{post.SelectTrainer}} </h4></li>
+                <li class="list-group-item bg-dark text-white"><h4>Reference : {{post.Reference}} </h4></li>
+                <li class="list-group-item bg-dark text-white"><h4>Address : {{post.Address}} </h4></li>
+                <li class="list-group-item bg-dark text-white"><h4>Payment Status : {{post.paymentStatus}} </h4></li>
+                <li class="list-group-item bg-dark text-white"><h4>Amount Paid : {{post.Price}} </h4></li>
+                <li class="list-group-item bg-dark text-white"><h4>Upcoming Due Date : {{post.DueDate}} </h4></li>
+                <li class="list-group-item bg-dark text-white"><h4>Joining Date : {{post.timestamp}} </h4></li>
+              
+                
+              </ul>
+              {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

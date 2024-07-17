@@ -24,15 +24,15 @@ Enrollment for Gym
             {% endfor %}
             
             
-            <form action="//" method='post'>
+            <form action="/join/" method='post'>
                 {% csrf_token %}
                 
                 <div class="form-group">
-                    <input type="text" class='form-control' name="name" placeholder='Enter Your Full Name' id="" required>
+                    <input type="text" class='form-control' name="FullName" placeholder='Enter Your Full Name' id="" required>
                 </div>
                 
                 <div class="form-group">
-                    <input type="email" class='form-control mt-2' name="email" value='{{user.email}}' placeholder='Enter Your Email' id="" required>
+                    <input type="email" class='form-control mt-2' name="email" value='{{user.email}}' placeholder='Enter Your Email' id="" readonly required>
                 </div>
                 
                 
@@ -47,7 +47,7 @@ Enrollment for Gym
                 
                 
                 <div class="form-group">
-                    <input type="number" class='form-control mt-2' name="PhoneNumber" placeholder='Enter Your Number' id="" required>
+                    <input type="number" class='form-control mt-2'  value='{{user.username}}' name="PhoneNumber" placeholder='Enter Your Number' id="" readonly required>
                 </div>
                 
                 
@@ -56,11 +56,11 @@ Enrollment for Gym
                 </div>
                 
                 <div class="form-group mt-2">
-                    <select class='form-control' name="" id="" required>
+                    <select class='form-control' name="member" id="" required>
                         <option selected value="">Select MemberShip Plan</option>
                         {% for p in Membership %}
                         
-                        <option value="{{p.plan}}">{{p.plan}} - {{p.price}} Rs</option>
+                        <option value="{{p.plan}} - {{p.price}}">{{p.plan}} - {{p.price}} Rs</option>
                         
                         
                         {% endfor %}
@@ -70,7 +70,7 @@ Enrollment for Gym
                 
                 
                 <div class="form-group mt-2">
-                    <select class='form-control' name="" id="" required>
+                    <select class='form-control' name="trainer" id="" required>
                         <option selected value="">Select Trainer</option>
                         {% for p in SelectTrainer %}
                         

@@ -2,11 +2,21 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .models import Contact, Membershipplan, Trainer
+from .models import Contact, Membershipplan, Trainer, Enrollment
 # Create your views here.
 
 def home(request):
     return render(request, 'index.html')
+
+def profile(request):
+    if not request.user.is_authenticated:
+        messages.warning(request, "Please Login and Try Again")
+        return redirect('/login')
+    
+    user_phone = request.user
+    posts = Enrollment.objects.filter(PhoneNumber=user_phone)
+    context = {'posts':posts}
+    return render(request, 'profile.html', context)
 
 
 def signup(request):
@@ -91,8 +101,26 @@ def contact(request):
 
 
 def enroll(request):
+    if not request.user.is_authenticated:
+        messages.warning(request, "Please Login and Try Again")
+        return redirect('/login')
+    
     Membership = Membershipplan.objects.all()
     SelectTrainer = Trainer.objects.all()
     context = {'Membership':Membership, 'SelectTrainer':SelectTrainer}
+    if request.method == 'POST':
+        FullName = request.POST.get('FullName')
+        email = request.POST.get('email')
+        gender = request.POST.get('gender')
+        PhoneNumber = request.POST.get('PhoneNumber')
+        DOB = request.POST.get('DOB')
+        member = request.POST.get('member')
+        trainer = request.POST.get('trainer')
+        reference = request.POST.get('reference')
+        address = request.POST.get('address')
+        query = Enrollment(FullName = FullName, Email = email, Gender = gender,PhoneNumber = PhoneNumber, DOB=DOB, SelectMemberShipplan=member, SelectTrainer = trainer, Reference = reference, Address = address )
+        query.save()
+        messages.success(request, "Thanks for Enrollment")
+        return redirect('/join')
     
     return render(request, 'enroll.html', context)
